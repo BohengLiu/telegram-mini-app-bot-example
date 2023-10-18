@@ -35,6 +35,10 @@ if (typeof window !== "undefined") {
     if (typeof url === "string" && !url.startsWith("http")) {
       newTarget = "_blank";
     }
+    // detect if ios
+    if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
+      newTarget = undefined;
+    }
 
     return originalWindowOpen(url, newTarget, features);
   };
