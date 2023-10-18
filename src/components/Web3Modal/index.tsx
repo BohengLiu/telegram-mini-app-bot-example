@@ -19,24 +19,26 @@ const metadata = {
 const chains = [mainnet, arbitrum];
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 
-const originalWindowOpen = window.open;
-(window as any).originOpen = originalWindowOpen;
-(window as any).open = function (
-  url?: string | URL,
-  target?: string,
-  features?: string
-) {
-  // 这里添加你想要的额外功能，例如：
-  console.log("window.open has been called with url: " + url);
+if (typeof window !== "undefined") {
+  const originalWindowOpen = window.open;
+  (window as any).originOpen = originalWindowOpen;
+  (window as any).open = function (
+    url?: string | URL,
+    target?: string,
+    features?: string
+  ) {
+    // 这里添加你想要的额外功能，例如：
+    console.log("window.open has been called with url: " + url);
 
-  // 调用原始的 window.open 函数
-  let newTarget = target;
-  if (typeof url === "string" && !url.startsWith('http')) {
-    newTarget = "_blank";
-  }
+    // 调用原始的 window.open 函数
+    let newTarget = target;
+    if (typeof url === "string" && !url.startsWith("http")) {
+      newTarget = "_blank";
+    }
 
-  return originalWindowOpen(url, newTarget, features);
-};
+    return originalWindowOpen(url, newTarget, features);
+  };
+}
 
 // 3. Create modal
 createWeb3Modal({ wagmiConfig, projectId, chains });
