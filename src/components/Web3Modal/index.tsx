@@ -19,6 +19,8 @@ const metadata = {
 const chains = [mainnet, arbitrum];
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 
+let count = 0
+
 if (typeof window !== "undefined") {
   const originalWindowOpen = window.open;
   (window as any).originOpen = originalWindowOpen;
@@ -29,6 +31,7 @@ if (typeof window !== "undefined") {
   ) {
     // 这里添加你想要的额外功能，例如：
     console.log("window.open has been called with url: " + url);
+    count = count + 1
 
     // 调用原始的 window.open 函数
     let newTarget = target;
@@ -37,7 +40,12 @@ if (typeof window !== "undefined") {
     }
     // detect if ios
     if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
-      newTarget = undefined;
+      if (count % 2) {
+        newTarget = undefined;
+      } else {
+        newTarget = '_self'
+      }
+      
     }
 
     return originalWindowOpen(url, newTarget, features);
