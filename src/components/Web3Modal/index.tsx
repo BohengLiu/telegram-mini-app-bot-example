@@ -4,13 +4,15 @@ import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
 
 import { WagmiConfig } from "wagmi";
 import { arbitrum, mainnet } from "wagmi/chains";
+import Swap from "../Swap";
+
 
 // 1. Get projectId
 const projectId = "df6535763d28360429eca5dcde8c8bdb";
 
 // 2. Create wagmiConfig
 const metadata = {
-  name: "Web3Modal",
+  name: "Web3 Modal",
   description: "Web3Modal Example",
   url: "https://web3modal.com",
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
@@ -59,6 +61,7 @@ export default function Web3App() {
   return (
     <WagmiConfig config={wagmiConfig}>
       <w3m-button />
+      <Swap />
     </WagmiConfig>
   );
 }
