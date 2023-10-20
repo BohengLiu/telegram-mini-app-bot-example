@@ -3,7 +3,7 @@
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
 
 import { WagmiConfig } from "wagmi";
-import { arbitrum, mainnet, goerli, lineaTestnet } from "wagmi/chains";
+import { arbitrum, mainnet, polygon, polygonMumbai, sepolia } from "wagmi/chains";
 import Swap from "../Swap";
 
 
@@ -18,7 +18,7 @@ const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 
-const chains = [mainnet, arbitrum, goerli, lineaTestnet];
+const chains = [mainnet, arbitrum, polygon, polygonMumbai, sepolia];
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 
 let count = 0
