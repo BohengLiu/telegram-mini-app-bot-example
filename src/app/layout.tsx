@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import "./globals.css";
 import type { Metadata } from "next";
-// import Script from "next/script";
+import Script from "next/script";
 
 
 export const metadata: Metadata = {
@@ -16,10 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/* <Script
+      <Script
         src="https://telegram.org/js/telegram-web-app.js"
         strategy="beforeInteractive"
-      /> */}
+      />
       <body>{children}</body>
     </html>
   );
