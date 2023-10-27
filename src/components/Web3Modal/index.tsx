@@ -61,6 +61,7 @@ export default function Web3App() {
   return (
     <WagmiConfig config={wagmiConfig}>
       <w3m-button />
+      <div className="w-full h-4" />
       <Swap />
     </WagmiConfig>
   );
