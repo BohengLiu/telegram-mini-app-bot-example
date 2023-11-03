@@ -4,7 +4,6 @@ export async function GET(request: Request) {
   // const url = request.url
   const url = new URL(request.url)
   const chainbaseApiPath = url.pathname.replace('/api', '')
-  console.log(chainbaseApiPath)
 
   try {
     // 目标 URL
@@ -25,7 +24,7 @@ export async function GET(request: Request) {
 
     // 检查响应是否成功
     if (!response.ok) {
-      return new Response('Error', {
+      return new Response(response.body, {
         status: response.status,
       })
     }
@@ -51,7 +50,7 @@ export async function POST(request: Request) {
   const url = new URL(request.url)
   const body = await request.text()
 
-  const chainbaseApiPath = url.pathname.replace('/api/', '')
+  const chainbaseApiPath = url.pathname.replace('/api', '')
 
   try {
     // 目标 URL
@@ -72,7 +71,7 @@ export async function POST(request: Request) {
 
     // 检查响应是否成功
     if (!response.ok) {
-      return new Response('Error', {
+      return new Response(response.body, {
         status: response.status,
       })
     }
