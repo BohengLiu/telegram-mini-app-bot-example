@@ -15,7 +15,7 @@ export default function useAsset(userId: number) {
 
   useEffect(() => {
     updateAsset()
-  }, [])
+  }, [userId])
   return {
     asset,
     updateAsset
