@@ -19,7 +19,7 @@ function CountdownTimer({ targetTime }: { targetTime: string }) {
     };
   }, [targetTime]);
 
-  return <p>下回合倒计时: {seconds} 秒</p>;
+  return <p>下回合还有{seconds}区块</p>;
 }
 
 export default CountdownTimer;
