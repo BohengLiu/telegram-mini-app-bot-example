@@ -34,7 +34,7 @@ export default function GameView() {
   const { totalWolves, wolves, updateWolves } = useWolfInfo()
   const { asset, updateAsset } = useAsset(1);
 
-  const userId = initDataUnsafe?.user?.id || 1;
+  const userId = initDataUnsafe?.user?.id  ? Number(initDataUnsafe?.user?.id) : 1;
 
   const buy = async (type: string ) => {
     console.log('购买')
@@ -66,7 +66,7 @@ export default function GameView() {
   return (
     <div className="max-w-[100vw] w-full">
       {initDataUnsafe?.user && (
-        <p>{`Hi, ${initDataUnsafe?.user?.username}(${initDataUnsafe?.user?.id})`}</p>
+        <p className="text-center">{`Hi, ${initDataUnsafe?.user?.username}(${initDataUnsafe?.user?.id})`}</p>
       )}
       <div className="border px-4 py-4 rounded">
         {gameStatus && (
