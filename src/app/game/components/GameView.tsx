@@ -32,9 +32,10 @@ export default function GameView() {
   const { totalGrass, grasses, updateGrasses } = useGrassInfo();
   const { totalSheep, sheeps, updateSheep } = useSheepInfo();
   const { totalWolves, wolves, updateWolves } = useWolfInfo()
-  const { asset, updateAsset } = useAsset(1);
+  
 
   const userId = initDataUnsafe?.user?.id  ? Number(initDataUnsafe?.user?.id) : 1;
+  const { asset, updateAsset } = useAsset(userId);
 
   const buy = async (type: string ) => {
     console.log('购买')
