@@ -76,11 +76,11 @@ export default function GameView() {
         <RoleDisplay type="sheep" total={totalSheep} onDetail={() => setIsDetailOpen('sheep')} onBuy={() => buy('sheep')} />
         <RoleDisplay type="wolf" total={totalWolves} onDetail={() => setIsDetailOpen('wolf')} onBuy={() => buy('wolf')} />
       </div>
-      <AssetDisplay asset={asset} userId={1} />
+      <AssetDisplay asset={asset} userId={userId} />
       <RoleDetailModal isOpen={Boolean(isDetailOpen)} type={isDetailOpen} grasses={grasses} sheeps={sheeps} wolves={wolves} onClose={() => setIsDetailOpen('')} />
 
       <BuyModal
-        userId={1}
+        userId={userId}
         isOpen={isBuyOpen}
         onClose={() => setIsBuyOpen(false)}
         type="grass"
