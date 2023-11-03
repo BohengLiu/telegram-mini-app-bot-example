@@ -5,7 +5,7 @@ export default function useGrassInfo() {
   const [grassInfo, setGrassInfo] = useState<Grass[]>([])
 
   const updateGameStatus = async () => {
-    const response = await fetch('http://1.116.37.183:8080/game/grass/active/get')
+    const response = await fetch('/api/game/grass/active/get')
     const data = await response.json()
     setGrassInfo(data.data || [])
   }

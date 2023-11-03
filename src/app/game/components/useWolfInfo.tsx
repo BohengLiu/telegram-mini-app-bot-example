@@ -5,7 +5,7 @@ export default function useWolfInfo() {
   const [grassInfo, setGrassInfo] = useState<Wolf[]>([])
 
   const updateGameStatus = async () => {
-    const response = await fetch('http://1.116.37.183:8080/game/wolf/active/get')
+    const response = await fetch('/api/game/wolf/active/get')
     const data = await response.json()
     setGrassInfo(data.data || [])
   }

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 
 function CountdownTimer({ targetTime }: { targetTime: string }) {
   const ts = new Date(targetTime).valueOf() / 1000;
-  const seconds = Math.floor(600 + ts - Date.now().valueOf() / 1000);
+  const seconds = Math.floor( ts - Date.now().valueOf() / 1000);
   const [, setSeconds] = useState(seconds);
 
   useEffect(() => {

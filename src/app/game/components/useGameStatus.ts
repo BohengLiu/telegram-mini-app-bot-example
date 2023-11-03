@@ -5,7 +5,7 @@ export default function useGameStatus() {
   const [gamestatus, setGameStatus] = useState<GameStatus | null>(null)
 
   const updateGameStatus = async () => {
-    const response = await fetch('http://1.116.37.183:8080/game/status/get')
+    const response = await fetch('/api/game/status/get')
     const data = await response.json()
     setGameStatus(data.data)
   }

@@ -13,7 +13,7 @@ export default function AssetDisplay({ asset, userId }: Props) {
   const nft = asset ? (asset[tab as keyof Asset] as any as Grass[]) : null;
 
   const sell = async (id: number) => {
-    const res = await fetch(`http://1.116.37.183:8080/game/${tab}/sell`, {
+    const res = await fetch(`/api/game/${tab}/sell`, {
       method: "POST",
       body: JSON.stringify({
         userId: userId,

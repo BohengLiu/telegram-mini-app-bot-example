@@ -38,7 +38,7 @@ export default function GameView() {
 
   const buy = async (type: string ) => {
     console.log('购买')
-    const res = await fetch(`http://1.116.37.183:8080/game/${type}/buy`, {
+    const res = await fetch(`/api/game/${type}/buy`, {
       method: "POST",
       body: JSON.stringify({
         userId: userId,
