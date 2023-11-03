@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import {Asset} from './type'
 
 
@@ -14,7 +14,10 @@ export default function useAsset(userId: number) {
   }
 
   useEffect(() => {
-    updateAsset()
+    if (userId) {
+      updateAsset()
+    }
+
   }, [userId])
   return {
     asset,

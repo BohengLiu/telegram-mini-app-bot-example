@@ -34,7 +34,7 @@ export default function GameView() {
   const { totalWolves, wolves, updateWolves } = useWolfInfo()
   
 
-  const userId = initDataUnsafe?.user?.id  ? Number(initDataUnsafe?.user?.id) : 1;
+  const userId = initDataUnsafe?.user?.id  ? Number(initDataUnsafe?.user?.id) : 0;
   const { asset, updateAsset } = useAsset(userId);
 
   const buy = async (type: string ) => {
