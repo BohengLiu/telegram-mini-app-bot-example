@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState, Fragment, use } from "react";
 import useGameStatus from "./useGameStatus";
 import useGrassInfo from "./useGrassInfo";
 import { Dialog, Transition } from "@headlessui/react";
@@ -21,6 +21,12 @@ export default function GameView() {
 
   const [isDetailOpen, setIsDetailOpen] = useState('');
   const [isBuyOpen, setIsBuyOpen] = useState(false);
+
+  const [curUrl, setCurUrl] = useState('');
+
+  useEffect(() => {
+    setCurUrl(window.location.href)
+  },[])
 
   useEffect(() => {
     if ((window as any)?.Telegram?.WebApp?.initDataUnsafe) {
@@ -66,6 +72,7 @@ export default function GameView() {
 
   return (
     <div className="max-w-[100vw] w-full">
+      <p>{curUrl}</p>
       {initDataUnsafe?.user && (
         <p className="text-center">{`Hi, ${initDataUnsafe?.user?.username}(${initDataUnsafe?.user?.id})`}</p>
       )}
