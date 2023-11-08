@@ -40,3 +40,10 @@ export interface Asset {
   sheep: Sheep[] | null;
   wolf: Wolf[] | null;
 }
+
+export interface GameLog {
+  id: number;
+  round: number;
+  log: string;
+  created_at: string;
+}

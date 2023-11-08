@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState, Fragment, use } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useGameStatus from "./useGameStatus";
 import useGrassInfo from "./useGrassInfo";
-import { Dialog, Transition } from "@headlessui/react";
 import BuyModal from "./BuyModal";
 import useAsset from "./useAsset";
 import AssetDisplay from "./AssetDisplay";
@@ -15,18 +14,37 @@ import RoleDetailModal from "./RoleDetailModal";
 import toast from "react-hot-toast";
 import CountdownTimer from "./TimeCountdown";
 import { formatNumber } from "@/utils/formatter";
+import GuideModal from "./GuideModal";
+import { genBuySuccessLog } from "@/utils/game";
+import useUserLogs from "./useUserLogs";
 
 export default function GameView() {
   const [initDataUnsafe, setInitDataUnsafe] = useState<any | null>(null);
 
-  const [isDetailOpen, setIsDetailOpen] = useState('');
+  const [isDetailOpen, setIsDetailOpen] = useState("");
   const [isBuyOpen, setIsBuyOpen] = useState(false);
 
-  const [curUrl, setCurUrl] = useState('');
+  // ----------------- Debug获得Tg注入内容 -----------------
+
+  const [curUrl, setCurUrl] = useState("");
 
   useEffect(() => {
-    setCurUrl(window.location.href)
-  },[])
+    setCurUrl(window.location.href);
+  }, []);
+  // --------------------------------------------------
+
+  // ----------------- 教程弹窗 -----------------
+
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
+  const handleGuideOpen = useCallback(() => {
+    setIsGuideOpen(true);
+  }, []);
+
+  const handleGuideClose = useCallback(() => {
+    setIsGuideOpen(false);
+  }, []);
+
+  // --------------------------------------------------
 
   useEffect(() => {
     if ((window as any)?.Telegram?.WebApp?.initDataUnsafe) {
@@ -37,14 +55,16 @@ export default function GameView() {
   const gameStatus = useGameStatus();
   const { totalGrass, grasses, updateGrasses } = useGrassInfo();
   const { totalSheep, sheeps, updateSheep } = useSheepInfo();
-  const { totalWolves, wolves, updateWolves } = useWolfInfo()
+  const { totalWolves, wolves, updateWolves } = useWolfInfo();
   
 
-  const userId = initDataUnsafe?.user?.id  ? Number(initDataUnsafe?.user?.id) : 0;
+  const userId = initDataUnsafe?.user?.id
+    ? Number(initDataUnsafe?.user?.id)
+    : 0;
   const { asset, updateAsset } = useAsset(userId);
+  const { updateUserLog, userLogs } = useUserLogs(userId);
 
-  const buy = async (type: string ) => {
-    console.log('购买')
+  const buy = async (type: string) => {
     const res = await fetch(`/api/game/${type}/buy`, {
       method: "POST",
       body: JSON.stringify({
@@ -52,39 +72,71 @@ export default function GameView() {
       }),
     });
     const data = await res.json();
-    console.log(data)
+    console.log(data);
     if (data.code === 0) {
-      toast.success("购买成功");
-      if (type === 'grass') {
-        await updateGrasses()
+      toast.success(genBuySuccessLog(type, data?.data?.id));
+      if (type === "grass") {
+        await updateGrasses();
       }
-      if (type === 'sheep') {
-        await updateSheep()
+      if (type === "sheep") {
+        await updateSheep();
       }
-      if (type === 'wolf') {
-        await updateWolves()
+      if (type === "wolf") {
+        await updateWolves();
       }
-      await updateAsset()
+      await updateAsset();
     }
   };
-
-  
 
   return (
     <div className="max-w-[100vw] w-full">
       {initDataUnsafe?.user && (
-        <p className="text-center">{`Hi, ${initDataUnsafe?.user?.username}(${initDataUnsafe?.user?.id})`}</p>
+        <div className="flex justify-between py-2">
+          <p className="text-center">{`Hi, ${initDataUnsafe?.user?.username}(${initDataUnsafe?.user?.id})`}</p>
+          <span onClick={handleGuideOpen}>查看教程</span>
+        </div>
       )}
       <div className="border px-4 py-4 rounded">
         {gameStatus && (
-          <p className="text-center">{`当前回合：${gameStatus.round}, 能量池：${formatNumber(gameStatus.init_pool_balance)}，`} <CountdownTimer targetTime={gameStatus.liquidation_time} /> </p>
+          <p className="text-center">
+            {`当前回合：${gameStatus.round}, 能量池：${formatNumber(
+              gameStatus.init_pool_balance
+            )}，`}{" "}
+            <CountdownTimer targetTime={gameStatus.liquidation_time} onTimeout={async () => {
+               await updateGrasses();
+               await updateSheep();
+               await updateWolves();
+            }} />
+          </p>
         )}
-        <RoleDisplay type="grass" total={totalGrass} onDetail={() => setIsDetailOpen('grass')} onBuy={() => buy('grass')} />
-        <RoleDisplay type="sheep" total={totalSheep} onDetail={() => setIsDetailOpen('sheep')} onBuy={() => buy('sheep')} />
-        <RoleDisplay type="wolf" total={totalWolves} onDetail={() => setIsDetailOpen('wolf')} onBuy={() => buy('wolf')} />
+        <RoleDisplay
+          type="grass"
+          total={totalGrass}
+          onDetail={() => setIsDetailOpen("grass")}
+          onBuy={() => buy("grass")}
+        />
+        <RoleDisplay
+          type="sheep"
+          total={totalSheep}
+          onDetail={() => setIsDetailOpen("sheep")}
+          onBuy={() => buy("sheep")}
+        />
+        <RoleDisplay
+          type="wolf"
+          total={totalWolves}
+          onDetail={() => setIsDetailOpen("wolf")}
+          onBuy={() => buy("wolf")}
+        />
       </div>
-      <AssetDisplay asset={asset} userId={userId} />
-      <RoleDetailModal isOpen={Boolean(isDetailOpen)} type={isDetailOpen} grasses={grasses} sheeps={sheeps} wolves={wolves} onClose={() => setIsDetailOpen('')} />
+      <AssetDisplay asset={asset} userId={userId} onSelled={updateAsset} logs={userLogs} />
+      <RoleDetailModal
+        isOpen={Boolean(isDetailOpen)}
+        type={isDetailOpen}
+        grasses={grasses}
+        sheeps={sheeps}
+        wolves={wolves}
+        onClose={() => setIsDetailOpen("")}
+      />
 
       <BuyModal
         userId={userId}
@@ -93,6 +145,7 @@ export default function GameView() {
         type="grass"
         onSuccess={() => console.log("success")}
       />
+      <GuideModal isOpen={isGuideOpen} onClose={handleGuideClose} />
       <Toaster />
     </div>
   );

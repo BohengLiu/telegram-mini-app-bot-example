@@ -1,13 +1,19 @@
+import getConfig from 'next/config'
 // export const runtime = "edge"
 
 export async function GET(request: Request) {
+  // get params from nexjs public config
+  const { publicRuntimeConfig } = getConfig()
+  const env = publicRuntimeConfig.env
+
+  
   // const url = request.url
   const url = new URL(request.url)
   const chainbaseApiPath = url.pathname.replace('/api', '')
 
   try {
     // 目标 URL
-    const baseUrl = 'http://1.116.37.183:8080'
+    const baseUrl = env === 'dev' ? 'http://127.0.0.1:8080': 'http://1.116.37.183:8080'
     const params = url.searchParams
     params.delete('params')
     const targetUrl =
@@ -46,6 +52,10 @@ export async function GET(request: Request) {
 
 
 export async function POST(request: Request) {
+  // get params from nexjs public config
+  const { publicRuntimeConfig } = getConfig()
+  const env = publicRuntimeConfig.env
+  
   // const url = request.url
   const url = new URL(request.url)
   const body = await request.text()
@@ -55,7 +65,7 @@ export async function POST(request: Request) {
   try {
     // 目标 URL
     url.searchParams.delete('params')
-    const baseUrl = 'http://1.116.37.183:8080'
+    const baseUrl = env === 'dev' ? 'http://127.0.0.1:8080': 'http://1.116.37.183:8080'
     const targetUrl =
       baseUrl + chainbaseApiPath 
 
