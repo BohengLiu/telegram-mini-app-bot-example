@@ -72,7 +72,6 @@ export default function GameView() {
 
   return (
     <div className="max-w-[100vw] w-full">
-      <p>{curUrl}</p>
       {initDataUnsafe?.user && (
         <p className="text-center">{`Hi, ${initDataUnsafe?.user?.username}(${initDataUnsafe?.user?.id})`}</p>
       )}
