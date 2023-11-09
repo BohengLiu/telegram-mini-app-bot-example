@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useState } from "react";
 import { Asset, Grass, GameLog } from "./type";
 import toast from "react-hot-toast";
@@ -50,14 +50,16 @@ export default function AssetDisplay({ asset, userId, logs, onSelled }: Props) {
             我的资产
           </span>
         </div>
-        <p>{`余额: ${asset?.balance || 0}`}</p>
+        <p>{`余额: ${formatNumber(asset?.balance || 0)}`}</p>
       </div>
       <div className="flex flex-col w-full">
         {contentTab === "log" && (
           <>
             <div className="h-[360px] overflow-auto px-4 pt-2">
               {logs?.map((log) => (
-                <div key={log.id}>{`${new Date(log.created_at).toLocaleString()} ${log.log}`}</div>
+                <div key={log.id}>{`${new Date(
+                  log.created_at
+                ).toLocaleString()} ${log.log}`}</div>
               ))}
             </div>
           </>
