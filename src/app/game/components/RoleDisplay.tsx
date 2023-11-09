@@ -1,4 +1,4 @@
-import {} from "react";
+'use client';
 
 interface Props {
   type: string;

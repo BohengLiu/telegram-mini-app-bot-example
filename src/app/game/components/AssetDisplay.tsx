@@ -1,3 +1,4 @@
+'use client';
 import { useState } from "react";
 import { Asset, Grass, GameLog } from "./type";
 import toast from "react-hot-toast";
