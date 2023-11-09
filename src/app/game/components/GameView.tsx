@@ -85,6 +85,7 @@ export default function GameView() {
         await updateWolves();
       }
       await updateAsset();
+      await updateUserLog();
     }
   };
 
@@ -100,7 +101,7 @@ export default function GameView() {
         {gameStatus && (
           <p className="text-center">
             {`当前回合：${gameStatus.round}, 能量池：${formatNumber(
-              gameStatus.init_pool_balance
+              gameStatus.init_pool_balance > 0 ? gameStatus.init_pool_balance : 0
             )}，`}{" "}
             <CountdownTimer targetTime={gameStatus.liquidation_time} onTimeout={async () => {
                await updateGrasses();

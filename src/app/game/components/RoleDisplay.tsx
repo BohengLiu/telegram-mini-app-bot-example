@@ -14,13 +14,13 @@ export default function RoleDisplay({type, total, onDetail, onBuy}: Props) {
       <p className="flex-1">{`总${label}数：${total}`}</p>
       <div className="space-x-2">
         <span
-          className="border px-3 py-1 border-black text-sm"
+          className="border px-3 py-1 border-black text-sm cursor-pointer"
           onClick={() => onDetail()}
         >
           详情
         </span>
         <span
-          className="border px-3 py-1 border-black text-sm"
+          className="border px-3 py-1 border-black text-sm cursor-pointer"
           onClick={() => onBuy()}
         >
           购买
