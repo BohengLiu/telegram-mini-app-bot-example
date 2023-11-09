@@ -1,18 +1,22 @@
 import {GameStatus} from './type'
-import { useEffect, useState} from 'react'
+import { useEffect, useState, useCallback} from 'react'
 
 export default function useGameStatus() {
-  const [gamestatus, setGameStatus] = useState<GameStatus | null>(null)
+  const [gameStatus, setGameStatus] = useState<GameStatus | null>(null)
 
-  const updateGameStatus = async () => {
+  const updateGameStatus = useCallback(async () => {
     const response = await fetch('/api/game/status/get')
     const data = await response.json()
     setGameStatus(data.data)
-  }
+  }, [])
   useEffect(() => {
     updateGameStatus()
     const interval = setInterval(updateGameStatus, 20000)
     return () => clearInterval(interval)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  return gamestatus
+  return {
+    gameStatus,
+    updateGameStatus,
+  }
 }

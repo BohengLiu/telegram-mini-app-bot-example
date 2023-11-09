@@ -52,11 +52,10 @@ export default function GameView() {
       setInitDataUnsafe((window as any)?.Telegram?.WebApp?.initDataUnsafe);
     }
   }, []);
-  const gameStatus = useGameStatus();
+  const { gameStatus, updateGameStatus } = useGameStatus();
   const { totalGrass, grasses, updateGrasses } = useGrassInfo();
   const { totalSheep, sheeps, updateSheep } = useSheepInfo();
   const { totalWolves, wolves, updateWolves } = useWolfInfo();
-  
 
   const userId = initDataUnsafe?.user?.id
     ? Number(initDataUnsafe?.user?.id)
@@ -101,13 +100,19 @@ export default function GameView() {
         {gameStatus && (
           <p className="text-center">
             {`当前回合：${gameStatus.round}, 能量池：${formatNumber(
-              gameStatus.init_pool_balance > 0 ? gameStatus.init_pool_balance : 0
+              gameStatus.init_pool_balance > 0
+                ? gameStatus.init_pool_balance
+                : 0
             )}，`}{" "}
-            <CountdownTimer targetTime={gameStatus.liquidation_time} onTimeout={async () => {
-               await updateGrasses();
-               await updateSheep();
-               await updateWolves();
-            }} />
+            <CountdownTimer
+              targetTime={gameStatus.liquidation_time}
+              onTimeout={async () => {
+                await updateGameStatus();
+                await updateGrasses();
+                await updateSheep();
+                await updateWolves();
+              }}
+            />
           </p>
         )}
         <RoleDisplay
@@ -129,7 +134,12 @@ export default function GameView() {
           onBuy={() => buy("wolf")}
         />
       </div>
-      <AssetDisplay asset={asset} userId={userId} onSelled={updateAsset} logs={userLogs} />
+      <AssetDisplay
+        asset={asset}
+        userId={userId}
+        onSelled={updateAsset}
+        logs={userLogs}
+      />
       <RoleDetailModal
         isOpen={Boolean(isDetailOpen)}
         type={isDetailOpen}
