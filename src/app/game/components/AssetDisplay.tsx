@@ -56,7 +56,7 @@ export default function AssetDisplay({ asset, userId, logs, onSelled }: Props) {
         {contentTab === "log" && (
           <>
             <div className="h-[360px] overflow-auto px-4 pt-2">
-              {logs.map((log) => (
+              {logs?.map((log) => (
                 <div key={log.id}>{`${new Date(log.created_at).toLocaleString()} ${log.log}`}</div>
               ))}
             </div>
