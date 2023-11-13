@@ -17,6 +17,8 @@ import { formatNumber } from "@/utils/formatter";
 import GuideModal from "./GuideModal";
 import { genBuySuccessLog } from "@/utils/game";
 import useUserLogs from "./useUserLogs";
+// import Grid from "./Grid";
+// import usePositions from "./usePositions";
 
 export default function GameView() {
   const [initDataUnsafe, setInitDataUnsafe] = useState<any | null>(null);
@@ -45,6 +47,9 @@ export default function GameView() {
   }, []);
 
   // --------------------------------------------------
+
+  // const { positions, updatePositions } = usePositions()
+
 
   useEffect(() => {
     if ((window as any)?.Telegram?.WebApp?.initDataUnsafe) {
@@ -97,6 +102,7 @@ export default function GameView() {
         </div>
       )}
       <div className="border px-4 py-4 rounded">
+        {/* <Grid positions={positions} /> */}
         {gameStatus && (
           <p className="text-center">
             {`当前回合：${gameStatus.round}, 能量池：${formatNumber(

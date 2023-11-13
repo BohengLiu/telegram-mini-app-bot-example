@@ -47,3 +47,11 @@ export interface GameLog {
   log: string;
   created_at: string;
 }
+
+export interface Position {
+  id: number;
+  position: string;
+  object: string;
+  x: number;
+  y: number;
+}
