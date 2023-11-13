@@ -50,10 +50,21 @@ export default function OnboardingModal({ isOpen, onClose }: Props) {
                             "https://t.me/my_tg_twa_counter_bot"
                           )
                         : "https://t.me/my_tg_twa_counter_bot"
-                    }&text=${typeof window != 'undefined' ? window.encodeURIComponent("hello") : 'hello'}`}
+                    }&text=${
+                      typeof window != "undefined"
+                        ? window.encodeURIComponent("hello")
+                        : "hello"
+                    }`}
                   >
                     Share1
                   </a>
+                  <div className="a2a_kit a2a_kit_size_32 a2a_default_style">
+                    <a
+                      className="a2a_dd"
+                      href="https://www.addtoany.com/share"
+                    ></a>
+                    <a className="a2a_button_telegram"></a>
+                  </div>
                 </div>
                 {/* <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-share-url="https://core.telegram.org/widgets/share"></script> */}
               </Dialog.Panel>
