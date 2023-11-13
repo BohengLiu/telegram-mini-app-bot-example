@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import toast from "react-hot-toast";
@@ -9,7 +9,6 @@ interface Props {
 }
 
 export default function OnboardingModal({ isOpen, onClose }: Props) {
-
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={onClose}>
@@ -44,11 +43,19 @@ export default function OnboardingModal({ isOpen, onClose }: Props) {
                   
                 </Dialog.Title> */}
                 <div className="flex flex-col items-center">
-                <a href={`https://t.me/share/url?url=${window.encodeURIComponent('https://t.me/my_tg_twa_counter_bot')}&text=${window.encodeURIComponent("hello")}`}>Share1</a>
-                
+                  <a
+                    href={`https://t.me/share/url?url=${
+                      typeof window != "undefined"
+                        ? window.encodeURIComponent(
+                            "https://t.me/my_tg_twa_counter_bot"
+                          )
+                        : "https://t.me/my_tg_twa_counter_bot"
+                    }&text=${typeof window != 'undefined' ? window.encodeURIComponent("hello") : 'hello'}`}
+                  >
+                    Share1
+                  </a>
                 </div>
                 {/* <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-share-url="https://core.telegram.org/widgets/share"></script> */}
-                
               </Dialog.Panel>
             </Transition.Child>
           </div>
