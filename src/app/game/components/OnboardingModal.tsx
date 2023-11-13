@@ -44,7 +44,7 @@ export default function OnboardingModal({ isOpen, onClose }: Props) {
                   
                 </Dialog.Title> */}
                 <div className="flex flex-col items-center">
-                <a href={`https://t.me/share/url?url=${'https://t.me/my_tg_twa_counter_bot'}&text=${"hello"}`}>Share</a>
+                <a href={`https://t.me/share/url?url=${'https://t.me/my_tg_twa_counter_bot'}&text=${"hello"}`}>Share1</a>
                 
                 </div>
                 {/* <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-share-url="https://core.telegram.org/widgets/share"></script> */}
