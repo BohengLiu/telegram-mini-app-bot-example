@@ -17,6 +17,7 @@ import { formatNumber } from "@/utils/formatter";
 import GuideModal from "./GuideModal";
 import { genBuySuccessLog } from "@/utils/game";
 import useUserLogs from "./useUserLogs";
+import OnboardingModal from "./OnboardingModal";
 // import Grid from "./Grid";
 // import usePositions from "./usePositions";
 
@@ -49,6 +50,20 @@ export default function GameView() {
   // --------------------------------------------------
 
   // const { positions, updatePositions } = usePositions()
+
+  // ------------------ onboarding ------------------
+
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState(true);
+  const handleOnboardingOpen = useCallback(() => {
+    setIsOnboardingOpen(true);
+  }
+  , []);
+  const handleOnboardingClose = useCallback(() => {
+    setIsOnboardingOpen(false);
+  }
+  , []);
+
+  // ----
 
 
   useEffect(() => {
@@ -163,6 +178,7 @@ export default function GameView() {
         onSuccess={() => console.log("success")}
       />
       <GuideModal isOpen={isGuideOpen} onClose={handleGuideClose} />
+      <OnboardingModal isOpen={isOnboardingOpen} onClose={handleOnboardingClose} />
       <Toaster />
     </div>
   );
