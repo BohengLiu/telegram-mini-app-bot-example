@@ -1,7 +1,6 @@
 "use client";
-import { useState, Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import toast from "react-hot-toast";
 
 interface Props {
   isOpen: boolean;
@@ -9,6 +8,7 @@ interface Props {
 }
 
 export default function OnboardingModal({ isOpen, onClose }: Props) {
+  const [url, setUrl] = useState("");
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={onClose}>
@@ -56,26 +56,15 @@ export default function OnboardingModal({ isOpen, onClose }: Props) {
                         : "hello"
                     }`}
                   >
-                    Share1
+                    Share
                   </a>
-                  <div className="a2a_kit a2a_kit_size_32 a2a_default_style">
-                    <a
-                      className="a2a_dd"
-                      href="https://www.addtoany.com/share"
-                    ></a>
-                    <a className="a2a_button_telegram"></a>
+                  <input value={url} onChange={(e) => setUrl(e.target.value)} type="text" placeholder="okx" className="border" />
+                  <a href={url} target="_blank">
+                    打开钱包
+                  </a>
                   </div>
-                  <a href={`https://t.me/share/embed?origin=${
-                      typeof window != "undefined"
-                        ? window.encodeURIComponent(
-                            "https://t.me/my_tg_twa_counter_bot"
-                          )
-                        : "https://t.me/my_tg_twa_counter_bot"
-                    }&text=${
-                      typeof window != "undefined"
-                        ? window.encodeURIComponent("hello")
-                        : "hello"
-                    }`}>Share2</a>
+                  {/* <script async src="
+                  <a href="okx" />
                 </div>
                 {/* <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-share-url="https://core.telegram.org/widgets/share"></script> */}
               </Dialog.Panel>
