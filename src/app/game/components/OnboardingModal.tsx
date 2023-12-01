@@ -58,10 +58,10 @@ export default function OnboardingModal({ isOpen, onClose }: Props) {
                   >
                     Share
                   </a>
-                  <input value={url} onChange={(e) => setUrl(e.target.value)} type="text" placeholder="okx" className="border" />
+                  {/* <input value={url} onChange={(e) => setUrl(e.target.value)} type="text" placeholder="okx" className="border" />
                   <a href={url} target="_blank">
                     打开钱包
-                  </a>
+                  </a> */}
                   </div>
                   {/* <script async src="
                   <a href="okx" />
