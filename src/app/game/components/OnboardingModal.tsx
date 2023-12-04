@@ -62,8 +62,8 @@ export default function OnboardingModal({ isOpen, onClose }: Props) {
                   <a href={url} target="_blank">
                     打开钱包
                   </a> */}
-                  </div>
-                  {/* <script async src="
+                </div>
+                {/* <script async src="
                   <a href="okx" />
                 </div>
                 {/* <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-share-url="https://core.telegram.org/widgets/share"></script> */}
